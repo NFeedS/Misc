@@ -1,0 +1,22 @@
+version: "3.9"
+services: 
+
+  postgres_nsfeeds:
+    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: "admin"
+    networks:
+      - nfeeds
+
+  auth:
+    image: auth:0.0.1
+    ports:
+      - "81:8080"
+    ntworks:
+      - nfeeds
+    depends_on:
+      - postgres_nsfeeds
+      
+networks:
+  nfeeds: {}
