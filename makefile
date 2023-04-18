@@ -2,47 +2,53 @@ install := mvnw install -DskipTests
 build := mvnw spring-boot:build-image -DskipTests
 command := ./$(install) && ./$(build)
 
+modules_folder := ../modules
+Ad_folder := Adapters
+DL_folder := DataLayer
+PL_folder := ProcessLayer
+BL_folder := BusinessLogic
+
 all: usermanager contentmanager eventmanager auth messages topics downstream subscription upstream scheduler routerin routerout subscriptions
 
 # adapters
 usermanager:
-	cd ../modules/Ad-UserManager;$(command);
+	cd $(modules_folder)/$(Ad_folder)/Ad-UserManager;$(command);
 
 contentmanager:
-	cd ../modules/Ad-ContentManager;$(command);
+	cd $(modules_folder)/$(Ad_folder)/Ad-ContentManager;$(command);
 
 eventmanager:
-	cd ../modules/Ad-EventManager;$(command);
+	cd $(modules_folder)/$(Ad_folder)/Ad-EventManager;$(command);
 
 # data layers
 auth:
-	cd ../modules/DL-Auth;$(command);
+	cd $(modules_folder)/$(DL_folder)/DL-Auth;$(command);
 
 messages:
-	cd ../modules/DL-Messages;$(command);
+	cd $(modules_folder)/$(DL_folder)/DL-Messages;$(command);
 
 subscriptions:
-	cd ../modules/DL-Subscriptions;$(command);
+	cd $(modules_folder)/$(DL_folder)/DL-Subscriptions;$(command);
 
 topics:
-	cd ../modules/DL-Topics;$(command);
+	cd $(modules_folder)/$(DL_folder)/DL-Topics;$(command);
 
 # Process layer
 downstream:
-	cd ../modules/PL-Downstream;$(command);
+	cd $(modules_folder)/$(PL_folder)/PL-Downstream;$(command);
 
 subscription:
-	cd ../modules/PL-Subscription;$(command);
+	cd $(modules_folder)/$(PL_folder)/PL-Subscription;$(command);
 
 upstream:
-	cd ../modules/PL-Upstream;$(command);
+	cd $(modules_folder)/$(PL_folder)/PL-Upstream;$(command);
 
 # Business logic
 scheduler:
-	cd ../modules/BL-Scheduler;$(command);
+	cd $(modules_folder)/$(BL_folder)/BL-Scheduler;$(command);
 
 routerin:
-	cd ../modules/BL-RouterIn;$(command);
+	cd $(modules_folder)/$(BL_folder)/BL-RouterIn;$(command);
 
 routerout:
-	cd ../modules/BL-RouterOut;$(command);
+	cd $(modules_folder)/$(BL_folder)/BL-RouterOut;$(command);

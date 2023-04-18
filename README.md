@@ -1,16 +1,107 @@
 # NFeedS
 
-## Project documentation
+## Architecture and description
+
+![image](images/Architecture.png)
+
+### Components description
+
+![image](images/Module_classification.png)
+
+#### Process Layer
+
+- **Subscription** : Provide public APIs to create/delete a user and subscribe/unsubscribe to/from a topic.
+- **Upstream** : Provide public APIs to create/delete topics and post new messages.
+- **Downstream** : Provide public APIs to retrieve messages from a topic.
+
+#### Business Logic
+
+- **RouterIn** : Manage the incoming requests for new topics and messages redirecting them to the appropriate service.
+- **RouterOut** : Provides content in form of messages to the Downstream service, keeps also a temporary db of those messages.
+- **Scheduler** : Is a filter layer between RouterOut and EventManager that decide which and when an event is sent downstream.
+
+#### Adapters
+
+- **ContentManager** : Abstract the management of Topics and Messages, does authorization checks.
+- **EventManager** : Check for changes in the ContentManager and create a new message (event) to be sent downstream when a new message or topic is created.
+- **UserManager** : Abstract the management of Users and Subscriptions, provides an endpoint to check the authorization.
+- **Pullers** : Set of services that act as a client, but talk directly to ContentManager, they crawl content from an extarnal service and convert it in messages for a topic.
+
+#### Data Layer
+
+- **Auth** : Provides CRUD endpoints for the users table.
+- **Topics** : Provides CRUD endpoints for the topics table.
+- **Messages** : Provides CRUD endpoints for the messages table.
+- **Subscriptions** : Provides CRUD endpoints for the subscriptions table.
+
+### Database
+
+![image](images/DB.png)
+
+### Endpoint requirements per module
+
+<span style="color:CornflowerBlue">PUT</span>
+<span style="color:ForestGreen">GET</span>
+<span style="color:Coral">POST</span>
+<span style="color:Crimson">DELETE</span>
+
+#### DL-Subsriptions
+
+- <span style="color:Coral">POST</span> new subscription
+- <span style="color:ForestGreen">GET</span> all the subscriptions
+- <span style="color:ForestGreen">GET</span> a subscription by id
+- <span style="color:ForestGreen">GET</span> search subscriptions by user id
+- <span style="color:CornflowerBlue">PUT</span> update a subscription
+- <span style="color:Crimson">DELETE</span> a subscription
+
+##### DL-Auth
+
+- <span style="color:Coral">POST</span> new user
+- <span style="color:ForestGreen">GET</span> all the users
+- <span style="color:ForestGreen">GET</span> a user by id
+- <span style="color:CornflowerBlue">PUT</span> update a user
+- <span style="color:Crimson">DELETE</span> a user
+
+##### DL-Topics
+
+- <span style="color:Coral">POST</span> new topic
+- <span style="color:ForestGreen">GET</span> all the topics
+- <span style="color:ForestGreen">GET</span> a topic by id
+- - <span style="color:ForestGreen">GET</span> search topics by owner
+- <span style="color:CornflowerBlue">PUT</span> update a topic
+- <span style="color:Crimson">DELETE</span> a topic
+
+### Concepts
+
+- **user** : an entry in the User table, has an identifier and an access token, validated doing an hash on the combination salt:token.
+- **topic** : an entry in the Topic table, identify a set of messages, has an owner (which is a user) and can be open or closed, the creation of a new topic trigger an automatic message in the system default topic..
+- **default topic** : is a special type of topic created automatically for each user, messages can be pushed without specifying a topic, the creation of a default topic doesn't trigger any event..
+- **system default topic** : is the main topic of the system, not tied to an owner and message cannot be pushed from the outside, it hosts messages created automatically, such as the creation of a new topic. 
+- **message** : It's an item belonging to a topic and pushed by a user, it has a content and a type.
+- **event** : is an abstract item created by EventManager in response to new messages or new topics, it's then sent towards Downstream to be sent to the user, it has a content, a topic, a type, a firetime, and it's not stored for long term.
+
+### Processes
+
+#### New User
+
+When a client want to create a new user in the system and receive an auth token to push messages and create topics it calls the appropriate endpoint exposed by **Subscription** (tbd).
+**Subscription** validates the value of the request and passes it to **Router-In**, which in this case request the creation of a new user from **UserManager**.
+At this point **UserManager** checks if the user is not already present, if it is, it returns an error and the procedure is aborted, the client will receive a bad request error.
+If the user is successfully created then an auth token is created and returned at the end; now **Router-In** follow up creating a default topic for the user and subscribing it to the system default topic.
+
+
+---
+## Project
 
 ### Technologies
 
 - Java 17
-- maven
-- Spring Framework
+- maven 4.0.0
+- Spring Boot 3.0.2
 - Postgres
 - Docker
 
-### Project organization
+### Folder organization
 
 Each module described in the architecture has it's own spring boot project.
 
@@ -28,6 +119,10 @@ The folder structure is as follow:
 NFeedS
 |-- Misc
 |-- modules
+    |-- Adapters
+    |-- BusinessLogic
+    |-- DataLayer
+    |-- ProcessLayer
 ```
 
 In the Misc folder there are all the scripts and configuration files to clone and make the app run.
@@ -48,6 +143,17 @@ following dependencies:
 <dependency>
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>com.lm.wrapper.http</groupId>
+    <artifactId>HttpWrapper</artifactId>
+    <version>1.0</version>
 </dependency>
 ```
 
@@ -76,4 +182,17 @@ following dependencies:
 #### Business Logic
 
 #### Process Layer
+
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.6.15</version>
+</dependency>
+```
+
+#### About HttpWrapper
+
+HttpWrapper is a library built around the standard Http java library, it provides a number of wrapper functions to build an http request.
+To build the project it has to be cloned from github and installed in a local maven repository.
 
