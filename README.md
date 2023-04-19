@@ -2,11 +2,15 @@
 
 ## Architecture and description
 
-![image](images/Architecture.png)
+<p align="center" >
+    <img src="images/Architecture.png" />
+</p>
 
 ### Components description
 
-![image](images/Module_classification.png)
+<p align="center">
+    <img src="images/Module_classification.png" />
+</p>
 
 #### Process Layer
 
@@ -36,7 +40,9 @@
 
 ### Database
 
-![image](images/DB.png)
+<p align="center" >
+    <img src="images/DB.png"/>
+</p>
 
 ### Endpoint requirements per module
 
