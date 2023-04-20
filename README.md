@@ -122,6 +122,7 @@
 #### BL-RouterOut
 
 - <span style="color:Coral">POST</span> add events
+- <span style="color:CornflowerBlue">PUT</span> update events callback by user+topic
 - <span style="color:ForestGreen">GET</span> events by user
 
 #### BL-Scheduler
@@ -130,20 +131,21 @@
 
 #### PL-Subscription
 
-- <span style="color:Coral">POST</span> create user
-- <span style="color:Coral">POST</span> subscribe to a topic
-- <span style="color:Coral">POST</span> unsubscribe from a topic
+- public : <span style="color:Coral">POST</span> create user
+- public : <span style="color:Coral">POST</span> subscribe to a topic
+- public : <span style="color:Coral">POST</span> unsubscribe from a topic
 
 #### PL-Upstream
 
-- <span style="color:Coral">POST</span> add message
-- <span style="color:Coral">POST</span> add topic
-- <span style="color:Coral">POST</span> close topic
+- public : <span style="color:Coral">POST</span> add message
+- public : <span style="color:Coral">POST</span> add topic
+- public : <span style="color:Coral">POST</span> close topic
 
 #### PL-Downstream
 
 - <span style="color:Coral">POST</span> send message
-- <span style="color:ForestGreen">GET</span> events by user
+- public : <span style="color:ForestGreen">GET</span> events by user
+- public : <span style="color:Coral">POST</span> overwrite callback
 
 ### Concepts
 
