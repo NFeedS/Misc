@@ -20,13 +20,13 @@
 
 #### Business Logic
 
-- **RouterIn** : Manage the incoming requests for new topics and messages redirecting them to the appropriate service.
+- **RouterIn** : Manage the incoming requests for new topics and messages redirecting them to the appropriate service after checking for authorization.
 - **RouterOut** : Provides content in form of messages to the Downstream service, keeps also a temporary db of those messages.
 - **Scheduler** : Is a filter layer between RouterOut and EventManager that decide which and when an event is sent downstream.
 
 #### Adapters
 
-- **ContentManager** : Abstract the management of Topics and Messages, does authorization checks.
+- **ContentManager** : Abstract the management of Topics and Messages, adapt the structure of different types of messages to the general one used in the data layer.
 - **EventManager** : Check for changes in the ContentManager and create a new message (event) to be sent downstream when a new message or topic is created.
 - **UserManager** : Abstract the management of Users and Subscriptions, provides an endpoint to check the authorization.
 - **Pullers** : Set of services that act as a client, but talk directly to ContentManager, they crawl content from an extarnal service and convert it in messages for a topic.
@@ -73,9 +73,77 @@
 - <span style="color:Coral">POST</span> new topic
 - <span style="color:ForestGreen">GET</span> all the topics
 - <span style="color:ForestGreen">GET</span> a topic by id
-- - <span style="color:ForestGreen">GET</span> search topics by owner
+- <span style="color:ForestGreen">GET</span> search topics by owner
 - <span style="color:CornflowerBlue">PUT</span> update a topic
 - <span style="color:Crimson">DELETE</span> a topic
+
+##### DL-Messages
+
+- <span style="color:Coral">POST</span> new message
+- <span style="color:ForestGreen">GET</span> all the messages
+- <span style="color:ForestGreen">GET</span> a message by id
+- <span style="color:ForestGreen">GET</span> search messages by topic
+- <span style="color:CornflowerBlue">PUT</span> update a message
+- <span style="color:Crimson">DELETE</span> a message
+
+#### Ad-UserManager
+
+- <span style="color:Coral">POST</span> create user
+- <span style="color:Coral">POST</span> add subscription
+- <span style="color:ForestGreen">GET</span> validate auth
+- <span style="color:ForestGreen">GET</span> get subscriptions by user
+- <span style="color:ForestGreen">GET</span> user by id
+- <span style="color:Crimson">DELETE</span> a user
+- <span style="color:Crimson">DELETE</span> a subscription
+
+#### Ad-ContentManager
+
+- <span style="color:Coral">POST</span> add message
+- <span style="color:Coral">POST</span> add topic
+- <span style="color:ForestGreen">GET</span> messages by topic
+- <span style="color:ForestGreen">GET</span> new messages by topic
+- <span style="color:ForestGreen">GET</span> new messages
+- <span style="color:ForestGreen">GET</span> topics
+- <span style="color:Crimson">DELETE</span> a topic
+- <span style="color:Crimson">DELETE</span> a message
+
+#### Ad-EventManager
+
+
+#### BL-RouterIn
+
+- <span style="color:Coral">POST</span> create user
+- <span style="color:Coral">POST</span> subscribe to a topic
+- <span style="color:Coral">POST</span> unsubscribe from a topic
+- <span style="color:Coral">POST</span> add message
+- <span style="color:Coral">POST</span> add topic
+- <span style="color:Coral">POST</span> close topic
+
+#### BL-RouterOut
+
+- <span style="color:Coral">POST</span> add events
+- <span style="color:ForestGreen">GET</span> events by user
+
+#### BL-Scheduler
+
+- <span style="color:Coral">POST</span> schedule events
+
+#### PL-Subscription
+
+- <span style="color:Coral">POST</span> create user
+- <span style="color:Coral">POST</span> subscribe to a topic
+- <span style="color:Coral">POST</span> unsubscribe from a topic
+
+#### PL-Upstream
+
+- <span style="color:Coral">POST</span> add message
+- <span style="color:Coral">POST</span> add topic
+- <span style="color:Coral">POST</span> close topic
+
+#### PL-Downstream
+
+- <span style="color:Coral">POST</span> send message
+- <span style="color:ForestGreen">GET</span> events by user
 
 ### Concepts
 
