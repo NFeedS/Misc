@@ -172,8 +172,8 @@ If the user is successfully created then an auth token is created and returned a
 ### Technologies
 
 - Java 17
-- maven 4.0.0
-- Spring Boot 3.0.2
+- maven
+- Spring Boot
 - Postgres
 - Docker
 
