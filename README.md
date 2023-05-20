@@ -267,8 +267,85 @@ following dependencies:
 </dependency>
 ```
 
-#### About HttpWrapper
+## Implementation status
 
-HttpWrapper is a library built around the standard Http java library, it provides a number of wrapper functions to build an http request.
-To build the project it has to be cloned from github and installed in a local maven repository.
-
+- [ ] **Data Layer**
+  - [ ] Subscriptions
+    - [ ] CRUD on Subscriptions model
+    - [ ] Search Subscriptions by user id
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Auth
+    - [ ] CRUD on User model
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Topics
+    - [ ] CRUD on Topics model
+    - [ ] Search Topic by owner
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Messages
+    - [ ] CRUD on Message model
+    - [ ] Search Message by topic
+    - [ ] Logging
+    - [ ] Dockerfile
+- [ ] **Adapters**
+  - [ ] User Manager
+    - [ ] Get/Create/Delete User
+    - [ ] Create/Delete Subscription
+    - [ ] Get subscriptions of user
+    - [ ] Auth user credentials
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Content Manager
+    - [ ] Get/Create/Delete Topic
+    - [ ] Create/Delete Message
+    - [ ] Get All messages of a topic
+    - [ ] Get new message in respect to a timestamp of a topic
+    - [ ] Get all new messages in respect to a timestamp
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Event Manager
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Feed Puller
+    - [ ] Logging
+    - [ ] Dockerfile
+- [ ] **Business Logic**
+  - [ ] Router-in
+    - [ ] Create a new user
+    - [ ] Subscribe/Unsubscribe from topic
+    - [ ] New message
+    - [ ] New topic
+    - [ ] Close topic
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Router-out
+    - [ ] Add event
+    - [ ] Update event callback
+    - [ ] Get events by users
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Scheduler
+    - [ ] Schedule event
+    - [ ] Logging
+    - [ ] Dockerfile
+- [ ] **Process Layer**
+  - [ ] Subscription
+    - [ ] Create user
+    - [ ] Subscribe to a topic
+    - [ ] Unsubscribe from a topic
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Upstream
+    - [ ] Create Message
+    - [ ] Create Topic
+    - [ ] Close Topic
+    - [ ] Logging
+    - [ ] Dockerfile
+  - [ ] Downstream
+    - [ ] Send message 
+    - [ ] Get events by user
+    - [ ] Change callback
+    - [ ] Logging
+    - [ ] Dockerfile
