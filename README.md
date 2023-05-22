@@ -269,26 +269,26 @@ following dependencies:
 
 ## Implementation status
 
-- [ ] **Data Layer**
-  - [ ] Subscriptions
-    - [ ] CRUD on Subscriptions model
-    - [ ] Search Subscriptions by user id
-    - [ ] Logging
-    - [ ] Dockerfile
-  - [ ] Auth
-    - [ ] CRUD on User model
-    - [ ] Logging
-    - [ ] Dockerfile
-  - [ ] Topics
-    - [ ] CRUD on Topics model
-    - [ ] Search Topic by owner
-    - [ ] Logging
-    - [ ] Dockerfile
-  - [ ] Messages
-    - [ ] CRUD on Message model
-    - [ ] Search Message by topic
-    - [ ] Logging
-    - [ ] Dockerfile
+- [x] **Data Layer**
+  - [x] Subscriptions
+    - [x] CRUD on Subscriptions model
+    - [x] Search Subscriptions by user id
+    - [x] Logging
+    - [x] Dockerfile
+  - [x] Auth
+    - [x] CRUD on User model
+    - [x] Logging
+    - [x] Dockerfile
+  - [x] Topics
+    - [x] CRUD on Topics model
+    - [x] Search Topic by owner
+    - [x] Logging
+    - [x] Dockerfile
+  - [x] Messages
+    - [x] CRUD on Message model
+    - [x] Search Message by topic
+    - [x] Logging
+    - [x] Dockerfile
 - [ ] **Adapters**
   - [ ] User Manager
     - [ ] Get/Create/Delete User
@@ -296,7 +296,7 @@ following dependencies:
     - [ ] Get subscriptions of user
     - [ ] Auth user credentials
     - [ ] Logging
-    - [ ] Dockerfile
+    - [x] Dockerfile
   - [ ] Content Manager
     - [ ] Get/Create/Delete Topic
     - [ ] Create/Delete Message
@@ -336,7 +336,7 @@ following dependencies:
     - [ ] Subscribe to a topic
     - [ ] Unsubscribe from a topic
     - [ ] Logging
-    - [ ] Dockerfile
+    - [x] Dockerfile
   - [ ] Upstream
     - [ ] Create Message
     - [ ] Create Topic
